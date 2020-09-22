@@ -1,5 +1,5 @@
 import argparse
-from nqueens import nqueens
+from .nqueens import nqueens
 
 
 msg = 'Genetic Algorithm implementation for N-Queens problem'

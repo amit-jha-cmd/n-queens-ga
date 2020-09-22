@@ -1,14 +1,29 @@
 import numpy as np
-
+import torch
+import torch.functional as f
+from .iter_permut import perm_val
 class nqueens:
-    def __init__(self:object, n:int):
+    
+    def __init__(self:object, n:int, m:int = None):
+        if m != None: 
+            self.m = m
+        else:
+            self.m = perm_val(n)
         self.n = n #size of board & number of queens
-        self.pop = None # population of gnomes
-        self.hm = None # hashmap (soln, fitness)
+        self.pop = torch.zeros((self.m, self.n * self.n), 
+                               dtype=torch.float32)
+        self.hm = dict({})
+        for i in range(perm_val(n)):
+            temp = np.array([i for i in range(self.n * self.n)])
+            temp = temp[np.random.choice(len(temp), 
+                                         size=n, 
+                                         replace=False)]
+            self.pop[i, temp] = 1
+        print("Initialized | Generation 0: ",self.pop.size())
         
-    def initialize(self : object):
-        # assign init pop to self.pop
-        print("Initialized")
+    # def initialize(self : object):
+    #     # assign init pop to self.pop
+    #     print("Initialized")
         
     def fitness(self : object):
         # if not on any row/col/diagonal
