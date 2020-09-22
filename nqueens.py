@@ -11,9 +11,12 @@ class nqueens:
             self.m = perm_val(n)
         self.n = n #size of board & number of queens
         self.pop = torch.zeros((self.m, self.n * self.n), 
-                               dtype=torch.float32)
-        self.hm = dict({})
-        for i in range(perm_val(n)):
+                               dtype=torch.float32) # gen 0
+        self.hm = dict({}) # hash table to store fitness value
+        
+        # position n queens randomly 
+        # on the chessboard
+        for i in range(perm_val(n)): 
             temp = np.array([i for i in range(self.n * self.n)])
             temp = temp[np.random.choice(len(temp), 
                                          size=n, 
