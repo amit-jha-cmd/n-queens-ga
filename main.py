@@ -26,7 +26,14 @@ if __name__ == "__main__":
     for epoch in tqdm(range(epochs)):
         # calculate fitness
         best_sol = model.calc_fit()
-        history.append([epoch, tabulate(np.zeros((n, n)), tablefmt="grid")])
+        history.append([epoch, 
+                        tabulate(np.zeros((n, n)), 
+                                 tablefmt="grid"), 
+                        100,
+                        tabulate(np.ones((n, n)), 
+                                 tablefmt="grid"), 
+                        0
+                        ])
         # crossover
         model.crossover(5)
         # mutation
@@ -37,7 +44,10 @@ if __name__ == "__main__":
     print(tabulate(history, 
                    tablefmt="fancy_grid",
                    headers=["Epoch", 
-                            "Best Solution"]
+                            "Best Solution",
+                            "Score",
+                            "Worst Solution", 
+                            "Score"]
                    )
           )
     print("Reminder: Calculate fitness score")

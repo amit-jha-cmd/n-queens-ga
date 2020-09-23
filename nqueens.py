@@ -28,7 +28,7 @@ class nqueens:
     #     # assign init pop to self.pop
     #     print("Initialized")
         
-    def calc_fit(self : object)-> np.array:
+    def calc_fit(self : object)-> tuple:
         # if not on any row/col/diagonal
         # assign + sum(all pair combination) to that soln
         # else
