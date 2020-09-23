@@ -2,16 +2,17 @@ import argparse
 from nqueens import nqueens
 from tabulate import tabulate
 from tqdm import tqdm
+import numpy as np
 
 msg = 'Genetic Algorithm implementation for N-Queens problem'
 parser = argparse.ArgumentParser(description=msg)
-parser.add_argument('n', 
+parser.add_argument('--n', 
                     type=int,
                     help="Specify n in n-queens")
-parser.add_argument('epochs', 
+parser.add_argument('--epochs', 
                     type=int, 
                     help="Specify number of Generations to run.")
-parser.add_argument('m',
+parser.add_argument('--m',
                     type=int,
                     help="Specify size of a geneation. It has to be greater than (n*n)Cn")
 
@@ -25,7 +26,7 @@ if __name__ == "__main__":
     for epoch in tqdm(range(epochs)):
         # calculate fitness
         best_sol = model.calc_fit()
-        history.append([epoch, best_sol])
+        history.append([epoch, tabulate(np.zeros((n, n)), tablefmt="grid")])
         # crossover
         model.crossover(5)
         # mutation
