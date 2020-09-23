@@ -42,6 +42,11 @@ if __name__ == "__main__":
         model.sort_pop()
         
     print(tabulate(history, 
+                   colalign=("center", 
+                             "center",
+                             "center",
+                             "center",
+                             "center"),
                    tablefmt="fancy_grid",
                    headers=["Epoch", 
                             "Best Solution",
