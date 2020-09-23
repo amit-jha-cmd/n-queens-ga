@@ -1,7 +1,8 @@
 import numpy as np
 import torch
 import torch.functional as f
-from .iter_permut import perm_val
+from iter_permut import perm_val
+
 class nqueens:
     
     def __init__(self:object, n:int, m:int = None):
@@ -22,32 +23,33 @@ class nqueens:
                                          size=n, 
                                          replace=False)]
             self.pop[i, temp] = 1
-        print("Initialized | Generation 0: ",self.pop.size())
         
     # def initialize(self : object):
     #     # assign init pop to self.pop
     #     print("Initialized")
         
-    def fitness(self : object):
+    def calc_fit(self : object)-> np.array:
         # if not on any row/col/diagonal
         # assign + sum(all pair combination) to that soln
         # else
         # assign - sum (for all such pair) + sum (normal pairs) to the soln
-        print("fitted")
+        # return best solution
+        pass
         
     def crossover(self : object, k: int):
         # select k best parents
         # generate offsprings from this set using
         # single point crossover
         # assign pop + offsprings to self.pop
-        print("crossed")
+        pass
         
-    def mutation(self : object):
+    def mutate(self : object):
         # probabilistic mutation 
         # assign the population + mutated values to self.pop
-        print("mutated")
+        pass
         
     def sort_pop(self : object):
         # sorted the pop based on fitness score
         # assign the top n*n gnomes from sorted pop
-        print("sorted")
+        pass
+        
