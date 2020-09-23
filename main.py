@@ -34,7 +34,7 @@ if __name__ == "__main__":
         model.sort_pop()
         
     print(tabulate(history, 
-                   tablefmt="pretty",
+                   tablefmt="fancy_grid",
                    headers=["Epoch", 
                             "Best Solution"]
                    )
