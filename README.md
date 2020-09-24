@@ -9,6 +9,7 @@ pip install -r requirement.txt
 ## How to run
 
 ```shell
-python main.py 5
+python main.py --n 3 --epochs 1 --m 5
 ```
-:warning: 5 here is the n in n-queens
+
+:warning: Here n is n in n-queens, Epoch is number of iterations, m is the population size
