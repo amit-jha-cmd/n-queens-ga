@@ -3,14 +3,13 @@ from nqueens import nqueens
 from tabulate import tabulate
 from tqdm import tqdm
 import numpy as np
-from print_table import print_table
+from utils import print_table
 
 msg = 'Genetic Algorithm implementation for N-Queens problem'
 parser = argparse.ArgumentParser(description=msg)
 parser.add_argument('--n', type=int)
 parser.add_argument('--epochs', type=int)
-parser.add_argument('--m', type=int,
-                    help="Specify size of a geneation. It has to be greater than (n*n)Cn")
+parser.add_argument('--m', type=int)
 
 if __name__ == "__main__":
     args = parser.parse_args()
@@ -27,7 +26,7 @@ if __name__ == "__main__":
                         ))
         model.crossover(2)
         model.mutate()
-        model.sort_pop()
+        model.clip_pop()
         
     print_table(history)
     print("Reminder: Calculate fitness score")
