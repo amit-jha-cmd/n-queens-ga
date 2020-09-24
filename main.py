@@ -25,7 +25,7 @@ if __name__ == "__main__":
                         tabulate(bs, tablefmt="grid"), bss, 
                         tabulate(ws, tablefmt="grid"), wss
                         ))
-        model.crossover(5)
+        model.crossover(2)
         model.mutate()
         model.sort_pop()
         

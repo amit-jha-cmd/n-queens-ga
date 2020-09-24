@@ -3,6 +3,7 @@ import torch
 import torch.functional as f
 from iter_permut import perm_val
 from itertools import combinations
+import random
 
 class nqueens:
     
@@ -58,11 +59,24 @@ class nqueens:
         return (bs, bss, ws, wss) # return (best_solution, score, worst solution, score)
         
     def crossover(self : object, k: int):
-        # select k best parents
-        # generate offsprings from this set using
-        # single point crossover
-        # assign pop + offsprings to self.pop
-        pass
+        ind = random.sample([i for i in range(self.m)], k)
+        comb = list(combinations(ind, 2))
+        offspring = []
+        
+        #REMINDER: make the concat value a variable
+        #BUG: number of queens may be >, < n but == n required
+        #POSSIBLE FIX: change the problem statement to place
+        #               as many queens on nxn chessboard such that they don't 
+        #               fall on the same diagonal, row, col
+        
+        for sample in comb:
+            offspring.append(torch.cat((self.pop[sample[0], :1], 
+                                        self.pop[sample[1], 1:]), 0).tolist())
+            offspring.append(torch.cat((self.pop[sample[1], :1], 
+                                        self.pop[sample[0], 1:]), 0).tolist())
+        
+        offspring = torch.IntTensor(offspring)
+        self.pop = torch.cat((self.pop, offspring))
         
     def mutate(self : object):
         # probabilistic mutation 
