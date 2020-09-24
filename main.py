@@ -3,6 +3,7 @@ from nqueens import nqueens
 from tabulate import tabulate
 from tqdm import tqdm
 import numpy as np
+from print_table import print_table
 
 msg = 'Genetic Algorithm implementation for N-Queens problem'
 parser = argparse.ArgumentParser(description=msg)
@@ -24,36 +25,20 @@ if __name__ == "__main__":
     history = []
     
     for epoch in tqdm(range(epochs)):
-        # calculate fitness
-        best_sol = model.calc_fit()
-        history.append([epoch, 
-                        tabulate(np.zeros((n, n)), 
-                                 tablefmt="grid"), 
-                        100,
-                        tabulate(np.ones((n, n)), 
-                                 tablefmt="grid"), 
-                        0
-                        ])
-        # crossover
+        sol_ele = model.calc_fit(2)
+        
+        # temp -------------------------------------
+        sol_ele = [epoch,  tabulate(np.zeros((n, n)), 
+                    tablefmt="grid"), 100,
+                    tabulate(np.ones((n, n)), 
+                    tablefmt="grid"), 0]
+        # ------------------------------------------
+        
+        history.append(sol_ele)
         model.crossover(5)
-        # mutation
         model.mutate()
-        # sort and clip the population
         model.sort_pop()
         
-    print(tabulate(history, 
-                   colalign=("center", 
-                             "center",
-                             "center",
-                             "center",
-                             "center"),
-                   tablefmt="fancy_grid",
-                   headers=["Epoch", 
-                            "Best Solution",
-                            "Score",
-                            "Worst Solution", 
-                            "Score"]
-                   )
-          )
+    print_table(history)
     print("Reminder: Calculate fitness score")
     
