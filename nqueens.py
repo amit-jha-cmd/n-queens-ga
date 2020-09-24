@@ -13,7 +13,7 @@ class nqueens:
             self.m = perm_val(n)
         self.n = n #size of board & number of queens
         self.pop = torch.zeros((self.m, self.n * self.n), 
-                               dtype=torch.float32) # gen 0
+                               dtype=torch.int32) # gen 0
         self.hm = dict({}) # hash table to store fitness value
         
         # position n queens randomly 
@@ -27,11 +27,6 @@ class nqueens:
             
 
     def calc_fit(self : object, bias:int) -> tuple:
-        # if not on any row/col/diagonal
-        # assign + sum(all pair combination) to that soln
-        # else
-        # assign - sum (for all such pair) + sum (normal pairs) to the soln
-        # return best solution
         for gnome in self.pop:
             gnome = np.reshape(gnome, (self.n, self.n))
             ind = np.where(gnome == 1)
@@ -42,11 +37,25 @@ class nqueens:
                 # p and q are the tuples indicating the index
                 # on the chess board where n queens are placed
                 if(False): # if on diag, Row, Col
-                    score -= sum(sum(list(p)) + sum(list(q))) + bias # reduce 
+                    score -= sum(p) + sum(q) + bias # reduce 
                 else:
-                    score += sum(sum(list(p)) + sum(list(q))) + bias # increase
+                    score += sum(p) + sum(q) + bias # increase
                     
-        return () # return (best_solution, score, worst solution, score)
+            self.hm["-".join(str(v) for v in gnome.flatten().tolist())] = score
+            
+            bs = np.reshape(max(self.hm, 
+                            key=self.hm.get).split("-"),
+                            (self.n, self.n))
+            
+            bss = max(self.hm.values())
+            
+            ws = np.reshape(min(self.hm, 
+                            key=self.hm.get).split("-"),
+                            (self.n, self.n))
+            
+            wss = min(self.hm.values())
+            
+        return (bs, bss, ws, wss) # return (best_solution, score, worst solution, score)
         
     def crossover(self : object, k: int):
         # select k best parents

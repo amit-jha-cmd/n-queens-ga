@@ -7,14 +7,9 @@ from print_table import print_table
 
 msg = 'Genetic Algorithm implementation for N-Queens problem'
 parser = argparse.ArgumentParser(description=msg)
-parser.add_argument('--n', 
-                    type=int,
-                    help="Specify n in n-queens")
-parser.add_argument('--epochs', 
-                    type=int, 
-                    help="Specify number of Generations to run.")
-parser.add_argument('--m',
-                    type=int,
+parser.add_argument('--n', type=int)
+parser.add_argument('--epochs', type=int)
+parser.add_argument('--m', type=int,
                     help="Specify size of a geneation. It has to be greater than (n*n)Cn")
 
 if __name__ == "__main__":
@@ -25,16 +20,11 @@ if __name__ == "__main__":
     history = []
     
     for epoch in tqdm(range(epochs)):
-        sol_ele = model.calc_fit(2)
-        
-        # temp -------------------------------------
-        sol_ele = [epoch,  tabulate(np.zeros((n, n)), 
-                    tablefmt="grid"), 100,
-                    tabulate(np.ones((n, n)), 
-                    tablefmt="grid"), 0]
-        # ------------------------------------------
-        
-        history.append(sol_ele)
+        bs, bss, ws, wss = list(model.calc_fit(2))
+        history.append((epoch, 
+                        tabulate(bs, tablefmt="grid"), bss, 
+                        tabulate(ws, tablefmt="grid"), wss
+                        ))
         model.crossover(5)
         model.mutate()
         model.sort_pop()
