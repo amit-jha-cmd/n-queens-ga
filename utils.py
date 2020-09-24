@@ -20,5 +20,6 @@ def perm_val(n:int) -> int:
     return len(list(perm))
 
 def sort_pop(pop:np.ndarray, fitness:dict) -> np.ndarray:
+    # INCOMPLETE FUNCTION
     return pop
     

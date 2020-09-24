@@ -67,13 +67,13 @@ class nqueens:
             offspring.append(torch.cat((self.pop[sample[1], :1], 
                                         self.pop[sample[0], 1:]), 0).tolist())
         
-        offspring = torch.IntTensor(offspring)
+        offspring = mutate(torch.IntTensor(offspring))
         self.pop = torch.cat((self.pop, offspring))
         
-    def mutate(self : object):
+    def mutate(offspring: torch.tensor) -> torch.tensor:
+        # INCOMPLETE FUNCTION
         # probabilistic mutation 
-        # assign the population + mutated values to self.pop
-        pass
+        return offspring
         
     def clip_pop(self : object):
         self.pop = torch.tensor(sort_pop(self.pop[:self.n * self.n].numpy(), 
