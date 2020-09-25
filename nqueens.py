@@ -67,10 +67,10 @@ class nqueens:
             offspring.append(torch.cat((self.pop[sample[1], :1], 
                                         self.pop[sample[0], 1:]), 0).tolist())
         
-        offspring = mutate(torch.IntTensor(offspring))
+        offspring = self.mutate(torch.IntTensor(offspring))
         self.pop = torch.cat((self.pop, offspring))
         
-    def mutate(offspring: torch.tensor) -> torch.tensor:
+    def mutate(self:object, offspring: torch.tensor) -> torch.tensor:
         # INCOMPLETE FUNCTION
         # probabilistic mutation 
         return offspring
