@@ -1,7 +1,7 @@
 import numpy as np
 import torch
 import torch.functional as f
-from utils import perm_val, sort_pop
+from utils import perm_val, sort_pop, fitness_condition
 from itertools import combinations
 import random
 
@@ -35,7 +35,7 @@ class nqueens:
             for (p, q) in comb:
                 # p and q are the tuples indicating the index
                 # on the chess board where n queens are placed
-                if(False): # if on diag, Row, Col
+                if(fitness_condition(p, q)): # if on diag, Row, Col
                     score -= sum(p) + sum(q) + bias # reduce 
                 else:
                     score += sum(p) + sum(q) + bias # increase
@@ -67,10 +67,10 @@ class nqueens:
             offspring.append(torch.cat((self.pop[sample[1], :1], 
                                         self.pop[sample[0], 1:]), 0).tolist())
         
-        offspring = mutate(torch.IntTensor(offspring))
+        offspring = self.mutate(torch.IntTensor(offspring))
         self.pop = torch.cat((self.pop, offspring))
         
-    def mutate(offspring: torch.tensor) -> torch.tensor:
+    def mutate(self:object, offspring: torch.tensor) -> torch.tensor:
         # INCOMPLETE FUNCTION
         # probabilistic mutation 
         return offspring
