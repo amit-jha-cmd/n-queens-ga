@@ -1,7 +1,7 @@
 import numpy as np
 import torch
 import torch.functional as f
-from utils import perm_val, sort_pop
+from utils import perm_val, sort_pop, fitness_condition
 from itertools import combinations
 import random
 
@@ -35,7 +35,7 @@ class nqueens:
             for (p, q) in comb:
                 # p and q are the tuples indicating the index
                 # on the chess board where n queens are placed
-                if(False): # if on diag, Row, Col
+                if(fitness_condition(p, q)): # if on diag, Row, Col
                     score -= sum(p) + sum(q) + bias # reduce 
                 else:
                     score += sum(p) + sum(q) + bias # increase

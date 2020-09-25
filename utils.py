@@ -22,4 +22,19 @@ def perm_val(n:int) -> int:
 def sort_pop(pop:np.ndarray, fitness:dict) -> np.ndarray:
     # INCOMPLETE FUNCTION
     return pop
+
+def fitness_condition(loc1:tuple, loc2:tuple) -> bool:
+    if(
+        (loc1[0] + 1 == loc2[0] and loc1[1] + 1 == loc2[1]) or
+        (loc1[0] - 1 == loc2[0] and loc1[1] - 1 == loc2[1]) or
+        (loc1[0] - 1 == loc2[0] and loc1[1] + 1 == loc2[1]) or
+        (loc1[0] + 1 == loc2[0] and loc1[1] - 1 == loc2[1])
+    ):
+        return True
+    
+    elif((loc1[0] == loc2[0]) or (loc1[1] == loc2[1])):
+        return True
+    
+    else:
+        return False
     
