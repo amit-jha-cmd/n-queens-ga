@@ -15,9 +15,10 @@ parser.add_argument('--history', type=bool)
 if __name__ == "__main__":
     args = parser.parse_args()
     n = args.n
+    m = args.m
     epochs = args.epochs
     history = args.history
-    model = nqueens(n)
+    model = nqueens(n, m)
     history_lst = []
     
     for epoch in tqdm(range(epochs)):
@@ -27,7 +28,7 @@ if __name__ == "__main__":
                             tabulate(bs, tablefmt="grid"), bss, 
                             tabulate(ws, tablefmt="grid"), wss
                             ))
-        model.crossover(2)
+        model.crossover(3)
         model.clip_pop()
         
     if(history):

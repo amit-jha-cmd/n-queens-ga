@@ -7,18 +7,15 @@ import random
 
 class nqueens:
     
-    def __init__(self:object, n:int, m:int = None):
-        if m != None: 
-            self.m = m
-        else:
-            self.m = perm_val(n)
+    def __init__(self:object, n:int, m:int):
+        self.m = m
         self.n = n #size of board & number of queens
         self.pop = torch.zeros((self.m, self.n * self.n), dtype=torch.int32) # gen 0
         self.hm = dict({}) # hash table to store fitness value
         
         # position n queens randomly 
         # on the chessboard
-        for i in range(perm_val(n)): 
+        for i in range(m):
             #REMINDER: next 2 lines can be merged for optimization
             temp = np.array([i for i in range(self.n * self.n)])
             temp = temp[np.random.choice(len(temp), size=n, replace=False)]
@@ -50,7 +47,7 @@ class nqueens:
         return (bs, bss, ws, wss) # return (best_solution, score, worst solution, score)
         
     def crossover(self : object, k: int):
-        ind = random.sample([i for i in range(self.m)], k)
+        ind = random.sample([i for i in range(self.n * self.n)], k)
         comb = list(combinations(ind, 2))
         offspring = []
         
@@ -62,10 +59,10 @@ class nqueens:
         
         for sample in comb:
             #REMINDER: make the concat value a variable
-            offspring.append(torch.cat((self.pop[sample[0], :1], 
-                                        self.pop[sample[1], 1:]), 0).tolist())
-            offspring.append(torch.cat((self.pop[sample[1], :1], 
-                                        self.pop[sample[0], 1:]), 0).tolist())
+            offspring.append(torch.cat((self.pop[sample[0], :3], 
+                                        self.pop[sample[1], 3:]), 0).tolist())
+            offspring.append(torch.cat((self.pop[sample[1], :3], 
+                                        self.pop[sample[0], 3:]), 0).tolist())
         
         offspring = self.mutate(torch.IntTensor(offspring))
         self.pop = torch.cat((self.pop, offspring))
@@ -76,6 +73,7 @@ class nqueens:
         return offspring
         
     def clip_pop(self : object):
+        self.pop = self.pop[torch.randperm(self.pop.size()[0])]
         self.pop = torch.tensor(sort_pop(self.pop[:self.n * self.n].numpy(), 
                                          self.hm), dtype=torch.int32)
         

@@ -1,6 +1,7 @@
 from tabulate import tabulate
 from itertools import permutations
 import numpy as np
+import math
 
 def print_table(history):
     print(tabulate(history, 
@@ -16,8 +17,9 @@ def print_table(history):
 
 
 def perm_val(n:int) -> int:
-    perm = permutations([i for i in range(n)], n)
-    return len(list(perm))
+    # perm = permutations([i for i in range(n)], n)
+    perm = math.factorial(n * n)
+    return perm
 
 def sort_pop(pop:np.ndarray, fitness:dict) -> np.ndarray:
     # INCOMPLETE FUNCTION
